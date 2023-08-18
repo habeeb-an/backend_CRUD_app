@@ -7,19 +7,42 @@ services:
     ports:
       - '3000:3000' 
     environment:
-      DATABASE_URL: "mysql://newuser:password@mysql:3306/backendtest" # Replace with your DB details
+      DATABASE_URL: "mysql://root:password@mysql:3306/backendtest" 
       JWT_SECRET_KEY: "Lk035p09ZIa94q0dNn5BT8Cojc8S0DhGRtQ2B86gHXpQdbYaC0OeZVTB2DzNVsHPXX1LjgvbbbRAkSzBpPTHuA=="
     depends_on:
       - mysql
-    links:
-      - mysql
+    volumes:
+      - .:/app
 
   mysql:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: password 
       MYSQL_DATABASE: backendtest
-      MYSQL_USER: newuser
-      MYSQL_PASSWORD: password
     ports:
       - '3306:3306'
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s 
+      retries: 5
+    networks:
+      - backend-network
+      
+  prisma-migrate:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      command: npx prisma migrate dev
+      depends_on:
+        mysql:
+          condition: service_healthy
+      environment:
+        - DATABASE_URL=mysql://root:password@mysql:3306/backendtest
+      volumes:
+        - .:/app
+      networks:
+        - backend-network
+networks:
+  backend-network:
+    driver: bridge
