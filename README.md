@@ -1,7 +1,6 @@
 # backend_CRUD_app
-# Backend Assignment
 
-Welcome to the Backend Assignment project!.
+Welcome to the Backend CRUD project!.
 
 This project is a RESTful API that allows users to store, retrieve, update and delete key-value pairs in a MySQL database. 
 
