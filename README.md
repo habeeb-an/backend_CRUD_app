@@ -2,7 +2,7 @@
 
 Welcome to the Backend CRUD project!.
 
-This project is a RESTful API that allows users to store, retrieve, update and delete key-value pairs in a MySQL database. 
+This project is a RESTful API with JWT authentifation that allows users to store, retrieve, update and delete key-value pairs in a MySQL database. 
 
 The project is built using Node.js, Express.js, Prisma as ORM, and Docker.
 
@@ -10,6 +10,7 @@ The project is built using Node.js, Express.js, Prisma as ORM, and Docker.
 
 - Node.js
 - Express.js
+- JWT
 - Prisma
 - MySQL
 - Docker
